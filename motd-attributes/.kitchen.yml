@@ -1,0 +1,26 @@
+---
+driver:
+  name: gce
+  google_project: "<%= ENV['GOOGLE_PROJECT']%>"
+  google_client_email: "<%= ENV['GOOGLE_CLIENT_EMAIL']%>"
+  google_key_location: "<%= ENV['GOOGLE_KEY_LOCATION']%>"
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: centos-6.6
+    driver:
+      name: gce
+      region: us-central1
+      zone_name: "us-central1-b"
+      image_name: centos-6-v20150325
+      machine_type: g1-small
+      public_key_path: "/Users/nwhite/.ssh/id_rsa.pub"
+      username: nwhite
+
+suites:
+  - name: default
+    run_list:
+      - recipe[motd-attributes::default]
+    attributes:
